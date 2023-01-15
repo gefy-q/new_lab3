@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Nowhere extends Place {
     public Nowhere() {
         name = "нигде";

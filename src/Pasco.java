@@ -18,7 +18,6 @@ public class Pasco extends People implements HumanActions, HumanCondition, Objec
         else {
             System.out.println(name + " оглянулся на " + people);
             people.calmness -= 200;
-            System.out.println(people + " чувствовал " + people.getCalmness());
         }
     }
 
@@ -29,7 +28,7 @@ public class Pasco extends People implements HumanActions, HumanCondition, Objec
 
     @Override
     public void go(Place place) {
-        System.out.println(name + " переместился и теперь находится " + place);
+        System.out.println(name + " переместился и теперь находится " + place.loc);
         loc = place;
         hp -= 100;
     }
@@ -42,7 +41,7 @@ public class Pasco extends People implements HumanActions, HumanCondition, Objec
 
     @Override
     public void feel() {
-
+        System.out.println(name + " испытывает " + CalmnessCondition(calmness) + " и" + HpCondition());
     }
 
     @Override

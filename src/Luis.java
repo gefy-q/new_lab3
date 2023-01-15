@@ -14,7 +14,7 @@ public class Luis extends People implements HumanActions, HumanCondition, Object
 
     @Override
     public void look(People people) {
-                if (equals(people)){
+        if (equals(people)){
             System.out.println(name + " не может посмотреть на себя");
         }
         else if (hp > 100){
@@ -37,7 +37,7 @@ public class Luis extends People implements HumanActions, HumanCondition, Object
     @Override
     public void go(Place place) {
         if (hp > 100 && calmness > 200){
-            System.out.println(name + " переместился и теперь находится " + place);
+            System.out.println(name + " переместился и теперь находится " + place.loc);
             loc = place;
             hp -= 100;
         }
@@ -57,7 +57,7 @@ public class Luis extends People implements HumanActions, HumanCondition, Object
 
     @Override
     public void feel() {
-
+        System.out.println(name + " испытывает " + CalmnessCondition(calmness) + " и" + HpCondition());
     }
 
     @Override

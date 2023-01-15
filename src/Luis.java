@@ -14,7 +14,10 @@ public class Luis extends People implements HumanActions, HumanCondition, Object
 
     @Override
     public void look(People people) {
-        if (hp > 100){
+                if (equals(people)){
+            System.out.println(name + " не может посмотреть на себя");
+        }
+        else if (hp > 100){
             System.out.println(name + " посмотрел на " + people);
             people.loc = loc;
             hp -= 20;

@@ -12,9 +12,14 @@ public class Pasco extends People implements HumanActions, HumanCondition, Objec
 
     @Override
     public void look(People people) {
-        System.out.println(name + " оглянулся на " + people);
-        people.calmness -= 200;
-        System.out.println(people + " чувствовал " + people.getCalmness());
+        if (equals(people)){
+            System.out.println(name + " не может оглянулся на себя");
+        }
+        else {
+            System.out.println(name + " оглянулся на " + people);
+            people.calmness -= 200;
+            System.out.println(people + " чувствовал " + people.getCalmness());
+        }
     }
 
     @Override

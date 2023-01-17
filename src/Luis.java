@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class Luis extends People implements HumanActions, HumanCondition, ObjectActions {
     public Luis() {
         name = "Льюис";
@@ -14,15 +16,13 @@ public class Luis extends People implements HumanActions, HumanCondition, Object
 
     @Override
     public void look(People people) {
-        if (equals(people)){
+        if (equals(people)) {
             System.out.println(name + " не может посмотреть на себя");
-        }
-        else if (hp > 100){
+        } else if (hp > 100) {
             System.out.println(name + " посмотрел на " + people);
             people.loc = loc;
             hp -= 20;
-        }
-        else {
+        } else {
             System.out.println(name + " требуется отдых.");
             hp += 10;
         }
@@ -36,12 +36,11 @@ public class Luis extends People implements HumanActions, HumanCondition, Object
 
     @Override
     public void go(Place place) {
-        if (hp > 100 && calmness > 200){
+        if (hp > 100 && calmness > 200) {
             System.out.println(name + " переместился и теперь находится " + place.loc);
             loc = place;
             hp -= 100;
-        }
-        else {
+        } else {
             System.out.println(name + " требуется отдых.");
             hp += 10;
             calmness += 100;
@@ -57,15 +56,14 @@ public class Luis extends People implements HumanActions, HumanCondition, Object
 
     @Override
     public void feel() {
-        System.out.println(name + " испытывает " + CalmnessCondition(calmness) + " и" + HpCondition());
+        System.out.println(name + " испытывает " + calmnessCondition(calmness) + " и" + hpCondition());
     }
 
     @Override
     public void think(String thought) {
-        if (calmness > 200){
+        if (calmness > 200) {
             System.out.println(name + " подумал, что " + thought);
-        }
-        else {
+        } else {
             System.out.println(name + " слишком напуган, чтобы думать.");
             hp += 10;
             calmness += 100;
@@ -87,7 +85,60 @@ public class Luis extends People implements HumanActions, HumanCondition, Object
     }
 
     @Override
-    public String HpCondition() {
+    public void hit(People people) {
+        if (hp > 100 && calmness > 200) {
+            String humanChange = " и теперь ";
+            if (rand() == 0) {
+                humanChange += "из него торчит " + Object.BONE.getTitle();
+            } else {
+                humanChange += "у него сломана " + Object.BONE.getTitle();
+            }
+            if (hp >= people.hp - 100) {
+                System.out.println(name + " ударил " + people.getName() + ", из-за чего " + people.getName() + " пострадал" + humanChange);
+                hp -= 100;
+                people.hp -= 300;
+            } else {
+                System.out.println(name + " ударил " + people.getName() + ", но из-за нехватки сил пострадал сам," + humanChange);
+                hp -= 300;
+                people.hp -= 100;
+            }
+        } else {
+            System.out.println(name + " требуется отдых.");
+            hp += 10;
+            calmness += 100;
+        }
+    }
+
+    @Override
+    public void fallDown() {
+        String humanChange = name + " упал и теперь ";
+        if (rand() == 0) {
+            System.out.println(humanChange + "из него торчит " + Object.BONE.getTitle());
+        } else {
+            System.out.println(humanChange + "у него сломана " + Object.BONE.getTitle());
+        }
+    }
+
+    @Override
+    public String calmnessCondition(int calmness) {
+        if (calmness > 900) {
+            return "Cпокойствие";
+        }
+        if (calmness > 700) {
+            return "Легкое беспокойство";
+        }
+        if (calmness > 500) {
+            return "Беспокойство";
+        }
+        if (calmness > 200) {
+            return "Испуг";
+        } else {
+            return "Паническую аттаку";
+        }
+    }
+
+    @Override
+    public String hpCondition() {
         if (hp > 900) {
             return " полон сил.";
         } else if (hp > 600) {
@@ -105,7 +156,7 @@ public class Luis extends People implements HumanActions, HumanCondition, Object
     }
 
     @Override
-    public String MoodCondition() {
+    public String moodCondition() {
         return mood.getTitle();
     }
 
@@ -116,12 +167,6 @@ public class Luis extends People implements HumanActions, HumanCondition, Object
         calmness -= 100;
     }
 
-    @Override
-    public void stickOut(Object object) {
-        System.out.println(object.getTitle() + " торчит наружу из " + name);
-        hp -= 200;
-        mood = Mood.Sad;
-    }
 
     @Override
     public void pierce(Object object) {

@@ -14,14 +14,16 @@ public class Main {
         luis.feel();
         luis.shrink(Object.HEART);
         luis.feel();
-        pasco.stickOut(Object.BONE);
+        pasco.fallDown();
         pasco.feel();
         luis.go(new Path());
         luis.go(new Forest());
         luis.pierce(Object.BRANCH);
         luis.think("Я иду в лес следом за мертвецом, я иду следом за мертвецом на кладбище домашних животных, и это не сон. Господи, миленький, это не сон. Это все происходит на самом деле.");
-        luis.stick(Object.GOUND);
         luis.feel();
+        luis.be();
+        pasco.hit(luis);
+        luis.hit(pasco);
     }
     public static void print(String message) {
         System.out.println(message);

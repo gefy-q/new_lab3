@@ -1,3 +1,5 @@
+import java.util.Random;
+
 abstract class People {
     protected String name;
     protected Mood mood = Mood.Happy;
@@ -35,6 +37,12 @@ abstract class People {
     @Override
     public int hashCode() {
         return super.hashCode() + this.getName().hashCode();
+    }
+
+
+    protected int rand() {
+        Random random = new Random();
+        return random.nextInt(2);
     }
 
 }

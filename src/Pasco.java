@@ -1,5 +1,7 @@
-public class Pasco extends People implements HumanActions, HumanCondition, ObjectActions{
-    public Pasco(){
+import java.util.Random;
+
+public class Pasco extends People implements HumanActions, HumanCondition, ObjectActions {
+    public Pasco() {
         name = "Паскоу";
         System.out.println("Персонаж " + name + " создан.");
     }
@@ -12,10 +14,9 @@ public class Pasco extends People implements HumanActions, HumanCondition, Objec
 
     @Override
     public void look(People people) {
-        if (equals(people)){
+        if (equals(people)) {
             System.out.println(name + " не может оглянулся на себя");
-        }
-        else {
+        } else {
             System.out.println(name + " оглянулся на " + people);
             people.calmness -= 200;
         }
@@ -41,7 +42,7 @@ public class Pasco extends People implements HumanActions, HumanCondition, Objec
 
     @Override
     public void feel() {
-        System.out.println(name + " испытывает " + CalmnessCondition(calmness) + " и" + HpCondition());
+        System.out.println(name + " испытывает " + calmnessCondition(calmness) + " и" + hpCondition());
     }
 
     @Override
@@ -63,7 +64,54 @@ public class Pasco extends People implements HumanActions, HumanCondition, Objec
     }
 
     @Override
-    public String HpCondition() {
+    public void hit(People people) {
+        String humanChange = " и теперь ";
+        if (rand() == 0) {
+            humanChange += "из него торчит " + Object.BONE.getTitle();
+        } else {
+            humanChange += "у него сломана " + Object.BONE.getTitle();
+        }
+        if (hp >= people.hp - 100) {
+            System.out.println(name + " ударил " + people.getName() + ", из-за чего " + people.getName() + " пострадал" + humanChange);
+            hp -= 100;
+            people.hp -= 300;
+        } else {
+            System.out.println(name + " ударил " + people.getName() + ", но из-за нехватки сил пострадал сам," + humanChange);
+            hp -= 300;
+            people.hp -= 100;
+        }
+    }
+
+    @Override
+    public void fallDown() {
+        String humanChange = name + " упал и теперь ";
+        if (rand() == 0) {
+            System.out.println(humanChange + "из него торчит " + Object.BONE.getTitle());
+        } else {
+            System.out.println(humanChange + "у него сломана " + Object.BONE.getTitle());
+        }
+    }
+
+    @Override
+    public String calmnessCondition(int calmness) {
+        if (calmness > 800) {
+            return "Cпокойствие";
+        }
+        if (calmness > 700) {
+            return "Легкое беспокойство";
+        }
+        if (calmness > 500) {
+            return "Беспокойство";
+        }
+        if (calmness > 200) {
+            return "Испуг";
+        } else {
+            return "Гробовое спокойствие";
+        }
+    }
+
+    @Override
+    public String hpCondition() {
         if (hp > 900) {
             return " полон сил.";
         } else if (hp > 600) {
@@ -81,7 +129,7 @@ public class Pasco extends People implements HumanActions, HumanCondition, Objec
     }
 
     @Override
-    public String MoodCondition() {
+    public String moodCondition() {
         return "полумертвое и " + mood.getTitle();
     }
 
@@ -90,13 +138,6 @@ public class Pasco extends People implements HumanActions, HumanCondition, Objec
         System.out.println(object.getTitle() + " " + name + " сжалось от ужаса.");
         mood = Mood.Frightened;
         calmness -= 100;
-    }
-
-    @Override
-    public void stickOut(Object object) {
-        System.out.println(object.getTitle() + " торчит наружу из " + name);
-        hp -= 200;
-        mood = Mood.Sad;
     }
 
     @Override

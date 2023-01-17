@@ -8,4 +8,6 @@ public interface HumanActions {
     void think(String thought);
     void be();
     void wince();
+    void hit(People people);
+    void fallDown();
 }
